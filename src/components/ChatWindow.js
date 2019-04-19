@@ -1,79 +1,30 @@
 import React from 'react';
-import { WindowHeader, Window, Button, Toolbar, WindowContent, TextArea, Fieldset } from 'react95';
+import { Window, WindowContent, TextArea } from 'react95';
+import TextField from './TextField';
+import WindowBar from './WindowBar';
 
+const users = ["danny", "john", "dave", "meghan"];
 
 const ChatWindow = () => {
     return (
         <>
-            <Window style={{width: 600, height: 600}}>
-                <WindowHeader>
-                    Ayo
-                </WindowHeader>
-                <Toolbar>
-                <Button
-                    flat
-                    size="sm"
-                >
-                File
-                </Button>
-                <Button
-                    flat
-                    size="sm"
-                >
-                Edit
-                </Button>
-                <Button
-                    flat
-                    size="sm"
-                >
-                Insert
-                </Button>
-                <Button
-                    flat
-                    size="sm"
-                >
-                People
-                </Button>
-                </Toolbar>
+            <Window style={{
+                width: 600, 
+                height: 600, 
+                margin: '0', 
+                display: 'grid',
+                gridTemplateRows: '40px 30px auto'
+            }}>
+                <WindowBar header="Ayo"/>
                 <WindowContent style={{
                         display: 'grid',
-                        gridTemplateRows: '2fr 1fr', 
-                        height: '500px', 
-                        gridGap: '10px',
-                        padding: '2px'    
+                        gridGap: '20px',
+                        gridTemplateRows: '2fr 1fr'                      
                     }}>
-                    <div style={{
-                        padding: '1rem',
-                        background: '#ced0cf'
-                    }}>
-                        <Fieldset style={{
-                            backgroundColor: 'white',
-                            padding: '0.5rem',
-                            outline: 'none',
-                            borderWidth: '2px',
-                            borderLeftColor: 'black',
-                            borderTopColor: 'black',
-                            borderRightColor: '#ffffff',
-                            borderBottomColor: '#ffffff',
-                            color: 'black',
-                            height: '100%'
-                        }}>
-                            <ul>
-                                <li>danny</li>
-                                <li>dd432432</li>
-                                <li>4321fdsafd</li>
-                                <li>dsavfda432</li>
-                                <li>fsgfs</li>
-                            </ul>
-                        </Fieldset>
-                    </div>
-                    <div style={{
-                        padding: '1rem',
-                        background: '#ced0cf'
-                    }}>
-                        <TextArea placeholder="Type in here.." style={{
-                            minHeight: '100%'}}/>
-                    </div>
+                        <TextField>
+                            {users}
+                        </TextField>
+                        <TextArea placeholder="Type in here.."/>
                 </WindowContent>
             </Window>
         </>
