@@ -1,0 +1,13 @@
+import React from 'react';
+import moment from 'moment';
+
+const Message = ({ message }) => {
+    return (
+        <li style={{ wordBreak: 'break-word' }}>
+            <span style={{color: message.color}}>{`${message.username} (${moment.unix(message.createdAt.nanoseconds).utc().format('hh:mm:ss A')})`}</span>
+            {`: ${message.text}`}
+        </li>
+    );
+}
+
+export default Message;

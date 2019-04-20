@@ -1,7 +1,7 @@
 import React from 'react';
 import { WindowHeader, Button, Toolbar } from 'react95';
 
-const WindowBar = ({ header }) => {
+const WindowBar = ({ header, handleLogOut }) => {
     return (
         <>
             <WindowHeader>
@@ -23,14 +23,9 @@ const WindowBar = ({ header }) => {
                 <Button
                     flat
                     size="sm"
+                    onClick={handleLogOut}
                 >
-                Insert
-                </Button>
-                <Button
-                    flat
-                    size="sm"
-                >
-                People
+                Logout
                 </Button>
             </Toolbar>
         </>

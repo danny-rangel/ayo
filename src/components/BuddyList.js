@@ -3,9 +3,8 @@ import { Window, WindowContent } from 'react95';
 import TextField from './TextField';
 import WindowBar from './WindowBar';
 
-const buddies = ["danny", "john", "dave", "meghan"];
 
-const BuddyList = () => {
+const BuddyList = ({ users }) => {
     return (
         <>
             <Window style={{
@@ -18,7 +17,7 @@ const BuddyList = () => {
                 <WindowBar header="Buddy List"/>
                 <WindowContent >
                     <TextField >
-                        {buddies}
+                        {users}
                     </TextField>
                 </WindowContent>
             </Window>
