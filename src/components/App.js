@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { createGlobalStyle, ThemeProvider, css } from "styled-components";
 import styled from 'styled-components';
 import { reset, themes } from 'react95';
 import { db, firebase } from './firebase'; 
@@ -11,12 +11,47 @@ const ResetStyles = createGlobalStyle`
   ${reset}
 `;
 
+const size = {
+  small: 400,
+  medium: 900,
+  large: 1140
+}
+
+const media = Object.keys(size).reduce((acc, label) => {
+  acc[label] = (...args) => css`
+      @media (max-width: ${size[label]}px) {
+          ${css(...args)}
+      }
+  `
+  return acc;
+}, {});
+
+const AppDiv = styled.div`
+  height: 100vh;
+  background-Color: teal;
+  width: 100%;
+
+  ${media.medium`
+    height: 100%;
+    `} 
+`;
+
 const MainDiv = styled.div`
   padding: 5rem;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: auto 300px;
   grid-gap: 40px;
+  justify-items: center;
+
+  ${media.medium`
+      grid-template-columns: 1fr;
+      grid-gap: 40px;
+      padding: 10px;
+      width: 95%;
+    `} 
 `;
+
+
 
 const App = () => {
 
@@ -71,7 +106,7 @@ const App = () => {
   }
 
     return admin ? (
-      <div style={{height: '100vh', backgroundColor: 'teal', width: '100%'}}>
+      <AppDiv >
         <ResetStyles />
         <ThemeProvider theme={themes.default}>
           <MainDiv>
@@ -79,7 +114,7 @@ const App = () => {
             <BuddyList admin={admin} users={users} />
           </MainDiv>
         </ThemeProvider>
-      </div> ) 
+      </AppDiv> ) 
       : 
       (
         <div>

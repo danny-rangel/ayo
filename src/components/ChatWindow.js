@@ -6,7 +6,6 @@ import WindowBar from './WindowBar';
 import { db } from './firebase';
 
 
-
 const StyledForm = styled.form`
     padding: 0;
     margin: 0;
@@ -15,6 +14,14 @@ const StyledForm = styled.form`
     color: black;
     height: 100%;
     box-sizing: border-box;
+`;
+
+const StyledWindow = styled(Window)`
+    width: 600; 
+    height: 600;
+    margin: 0; 
+    display: grid;
+    grid-template-rows: 40px 30px auto;
 `;
 
 
@@ -62,13 +69,7 @@ const ChatWindow = ({ admin, handleLogOut }) => {
 
     return (
         <>
-            <Window style={{
-                width: 600, 
-                height: 600, 
-                margin: '0', 
-                display: 'grid',
-                gridTemplateRows: '40px 30px auto'
-            }}>
+            <StyledWindow>
                 <WindowBar header="Ayo" handleLogOut={handleLogOut}/>
                 <WindowContent style={{
                         display: 'grid',
@@ -91,7 +92,7 @@ const ChatWindow = ({ admin, handleLogOut }) => {
                         </Button>
                     </StyledForm>
                 </WindowContent>
-            </Window>
+            </StyledWindow>
         </>
     );
 }
