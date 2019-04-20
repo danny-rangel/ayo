@@ -17,7 +17,7 @@ const StyledForm = styled.form`
 `;
 
 const StyledWindow = styled(Window)`
-    width: 600; 
+    width: 80%;
     height: 600;
     margin: 0; 
     display: grid;
