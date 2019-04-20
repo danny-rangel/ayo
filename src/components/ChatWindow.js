@@ -1,9 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { TextArea, Window, WindowContent, Button } from 'react95';
-import styled from 'styled-components'
+import styled, { css }  from 'styled-components'
 import MessageField from './MessageField';
 import WindowBar from './WindowBar';
 import { db } from './firebase';
+
+const size = {
+    small: 400,
+    medium: 900,
+    large: 1140
+  }
+  
+  const media = Object.keys(size).reduce((acc, label) => {
+    acc[label] = (...args) => css`
+        @media (max-width: ${size[label]}px) {
+            ${css(...args)}
+        }
+    `
+    return acc;
+  }, {});
 
 
 const StyledForm = styled.form`
@@ -22,6 +37,12 @@ const StyledWindow = styled(Window)`
     margin: 0; 
     display: grid;
     grid-template-rows: 40px 30px auto;
+
+
+    ${media.medium`
+
+      width: 95%;
+    `} 
 `;
 
 

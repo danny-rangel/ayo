@@ -42,6 +42,7 @@ const MainDiv = styled.div`
   grid-template-columns: auto 300px;
   grid-gap: 40px;
   justify-items: center;
+  margin-bottom: 40px;
 
   ${media.medium`
       grid-template-columns: 1fr;
