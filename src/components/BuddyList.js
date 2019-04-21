@@ -14,7 +14,7 @@ const BuddyList = ({ users, handleLogOut }) => {
                 display: 'grid',
                 gridTemplateRows: '40px 30px auto'
             }}>
-                <WindowBar header="Buddy List" handleLogOut={handleLogOut}/>
+                <WindowBar logout toolbar header="Buddy List" handleLogOut={handleLogOut}/>
                 <WindowContent >
                     <TextField >
                         {users}

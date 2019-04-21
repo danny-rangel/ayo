@@ -96,7 +96,7 @@ const ChatWindow = ({ admin, handleLogOut }) => {
     return  (
         <>
             <StyledWindow>
-                <WindowBar header="Ayo" handleLogOut={handleLogOut}/>
+                <WindowBar logout toolbar header="Ayo" handleLogOut={handleLogOut}/>
                 <WindowContent style={{
                         display: 'grid',
                         gridGap: '20px',

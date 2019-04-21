@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'moment';
 
 const Message = ({ message }) => {
-
     switch(message.type) {
         case 'message':
             return (
@@ -22,7 +21,9 @@ const Message = ({ message }) => {
         case 'signOff':
             return (
                 <li style={{ wordBreak: 'break-word' }}>
-                    {`${message.username} signed off at ${moment.unix(message.createdAt.seconds).format('hh:mm:ss A')}.`}
+                    <span style={{color: message.color}}>
+                        {`${message.username} signed off at ${moment.unix(message.createdAt.seconds).format('hh:mm:ss A')}.`}
+                    </span>
                 </li>
             );
         default:

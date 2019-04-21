@@ -6,6 +6,7 @@ import { db, firebase, setupPresence } from './firebase';
 
 import ChatWindow from './ChatWindow';
 import BuddyList from './BuddyList';
+import Login from './Login';
 
 const ResetStyles = createGlobalStyle`
   ${reset}
@@ -33,7 +34,15 @@ const AppDiv = styled.div`
 
   ${media.medium`
     height: 100%;
-    `} 
+  `} 
+`;
+
+const LoginDiv = styled.div`
+  height: 100vh;
+  background-Color: teal;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
 `;
 
 const MainDiv = styled.div`
@@ -42,6 +51,7 @@ const MainDiv = styled.div`
   grid-template-columns: auto 300px;
   grid-gap: 40px;
   justify-items: center;
+  align-items: center;
   margin-bottom: 40px;
 
   ${media.medium`
@@ -49,7 +59,7 @@ const MainDiv = styled.div`
       grid-gap: 40px;
       padding: 10px;
       width: 95%;
-    `} 
+  `} 
 `;
 
 
@@ -58,7 +68,6 @@ const App = () => {
 
   const [admin, setAdmin] = useState(null);
   const [users, setUsers] = useState([]);
-  const [error, setError] = useState(null);
   const [loading, setIsLoading] = useState(false);
   
 
@@ -125,14 +134,13 @@ const App = () => {
     try {
       await firebase.auth().signInWithPopup(provider);
     } catch(error) {
-      setError(error);
+      alert(error);
     }
-    
   }
 
     if (loading) {
       return (
-        <div>Loading...</div>
+        <AppDiv />
       );
     }
 
@@ -148,17 +156,12 @@ const App = () => {
       </AppDiv> ) 
       : 
       (
-        <div>
-          <h1>Ayo</h1>
-          <button onClick={handleSignIn} >Sign in with Google</button>
-          {error && (
-            <div>
-              <p>Sorry, there was a problem logging you in.</p>
-              <i>{error.message}</i>
-              <p>Please try again.</p>
-            </div>
-          )}
-        </div>
+        <LoginDiv>
+          <ResetStyles />
+          <ThemeProvider theme={themes.default}>
+            <Login handleSignIn={handleSignIn} />
+          </ThemeProvider>  
+        </LoginDiv>
       )
     
 }
