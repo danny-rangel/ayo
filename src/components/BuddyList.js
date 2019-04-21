@@ -4,7 +4,7 @@ import TextField from './TextField';
 import WindowBar from './WindowBar';
 
 
-const BuddyList = ({ users }) => {
+const BuddyList = ({ users, handleLogOut }) => {
     return (
         <>
             <Window style={{
@@ -14,7 +14,7 @@ const BuddyList = ({ users }) => {
                 display: 'grid',
                 gridTemplateRows: '40px 30px auto'
             }}>
-                <WindowBar header="Buddy List"/>
+                <WindowBar header="Buddy List" handleLogOut={handleLogOut}/>
                 <WindowContent >
                     <TextField >
                         {users}

@@ -3,9 +3,7 @@ import { Fieldset } from 'react95';
 import styled from 'styled-components';
 import Message from './Message'
 
-const MessageField = ({ messages }) => {
-
-    const StyledField = styled(Fieldset)`
+const StyledField = styled(Fieldset)`
     background-color: white;
     padding: 0.2rem;
     outline: none;
@@ -18,7 +16,7 @@ const MessageField = ({ messages }) => {
     overflow: auto;
 `;
 
-
+const MessageField = ({ messages }) => {
     return (
         <StyledField>
             <ul>

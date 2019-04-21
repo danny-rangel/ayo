@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/database';
 import 'firebase/auth'
 
 const config = {
@@ -13,5 +14,48 @@ const config = {
 
 firebase.initializeApp(config);
 const db = firebase.firestore();
+const reatltimedb = firebase.database();
+
+export function setupPresence(user){
+
+  const isOfflineForRealTime = {
+    state: 'offline',
+    lastChanged: firebase.database.ServerValue.TIMESTAMP
+  }
+
+  const isOnlineForRealTime = {
+    state: 'online',
+    lastChanged: firebase.database.ServerValue.TIMESTAMP
+  }
+
+
+  const isOfflineForFirestore = {
+    state: 'offline',
+    lastChanged: firebase.firestore.FieldValue.serverTimestamp()
+  }
+
+  const isOnlineForFirestore = {
+    state: 'online',
+    lastChanged: firebase.firestore.FieldValue.serverTimestamp()
+  }
+
+  const rtfbRef = reatltimedb.ref(`/status/${user.uid}`);
+  const userDocument = db.doc(`/users/${user.uid}`);
+
+  reatltimedb.ref('.info/connected').on('value', async snapshot => {
+    if(snapshot.val() === false) {
+      userDocument.update({
+        status: isOfflineForFirestore
+      });
+      return;
+    }
+
+    await rtfbRef.onDisconnect().set(isOfflineForRealTime);
+    rtfbRef.set(isOnlineForRealTime);
+    userDocument.update({
+      status: isOnlineForFirestore
+    });
+  });
+}
 
 export { db, firebase };

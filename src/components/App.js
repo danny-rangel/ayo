@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { createGlobalStyle, ThemeProvider, css } from "styled-components";
 import styled from 'styled-components';
-import { reset, themes } from 'react95';
-import { db, firebase } from './firebase'; 
+import { reset, themes, Hourglass } from 'react95';
+import { db, firebase, setupPresence } from './firebase'; 
 
 import ChatWindow from './ChatWindow';
 import BuddyList from './BuddyList';
@@ -59,8 +59,11 @@ const App = () => {
   const [admin, setAdmin] = useState(null);
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setIsLoading] = useState(false);
+  
 
   useEffect(() => {
+    setIsLoading(true);
     return firebase.auth().onAuthStateChanged(firebaseUser => {
       if (firebaseUser) {
         let colors = ['red', 'green', 'blue', 'orange', 'gold', 'deeppink', 'aqua'];
@@ -71,9 +74,12 @@ const App = () => {
           color: chosenOne
         }
         setAdmin(user);
-        db.collection('users').doc(user.uid).set(user, { merge: true })
+        db.collection('users').doc(user.uid).set(user, { merge: true });
+        setupPresence(user);
+        setIsLoading(false);
       } else {
         setAdmin(null);
+        setIsLoading(false);
       }
     });
   }, [])
@@ -106,13 +112,19 @@ const App = () => {
     
   }
 
+    if (loading) {
+      return (
+        <div>Loading...</div>
+      );
+    }
+
     return admin ? (
       <AppDiv >
         <ResetStyles />
         <ThemeProvider theme={themes.default}>
           <MainDiv>
             <ChatWindow admin={admin} handleLogOut={handleLogOut} />
-            <BuddyList admin={admin} users={users} />
+            <BuddyList admin={admin} users={users} handleLogOut={handleLogOut} />
           </MainDiv>
         </ThemeProvider>
       </AppDiv> ) 

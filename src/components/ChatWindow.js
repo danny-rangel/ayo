@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextArea, Window, WindowContent, Button } from 'react95';
+import { TextArea, Window, WindowContent, Button, Hourglass } from 'react95';
 import styled, { css }  from 'styled-components'
 import MessageField from './MessageField';
 import WindowBar from './WindowBar';
@@ -46,12 +46,15 @@ const StyledWindow = styled(Window)`
 `;
 
 
+
 const ChatWindow = ({ admin, handleLogOut }) => {
 
     const [message, setMessage] = useState("");
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState(null);
+    const [fetching, isFetching] = useState(true);
 
     useEffect(() => {
+        isFetching(true);
         return db.collection('messages')
             .orderBy('createdAt')
             .onSnapshot(snapshot => {
@@ -63,6 +66,7 @@ const ChatWindow = ({ admin, handleLogOut }) => {
                     })
                 });
                 setMessages(docs);
+                isFetching(false);
             });
     }, [])
 
@@ -88,7 +92,7 @@ const ChatWindow = ({ admin, handleLogOut }) => {
     
 
 
-    return (
+    return  (
         <>
             <StyledWindow>
                 <WindowBar header="Ayo" handleLogOut={handleLogOut}/>
@@ -98,11 +102,11 @@ const ChatWindow = ({ admin, handleLogOut }) => {
                         gridTemplateRows: '2fr 1fr',
                         height: '500px'
                     }}>
-                    <MessageField messages={messages} />
+                    {fetching ? (<div>Loading...</div>) : (<MessageField messages={messages} />) }
                     <StyledForm>
                         <TextArea 
                             value={message}
-                            placeholder="Type in here.."
+                            placeholder="Type something..."
                             onChange={handleChange}
                             height='60%'
                         />
