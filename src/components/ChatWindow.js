@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { TextArea, Window, WindowContent, Button, Hourglass } from 'react95';
+import { TextArea, Window, WindowContent, Button } from 'react95';
 import styled, { css }  from 'styled-components'
 import MessageField from './MessageField';
 import WindowBar from './WindowBar';
 import { db } from './firebase';
+
 
 const size = {
     small: 400,
@@ -40,7 +41,6 @@ const StyledWindow = styled(Window)`
 
 
     ${media.medium`
-
       width: 95%;
     `} 
 `;
@@ -83,7 +83,8 @@ const ChatWindow = ({ admin, handleLogOut }) => {
               createdAt: new Date(),
               username: admin.displayName,
               userId: admin.uid,
-              color: admin.color
+              color: admin.color,
+              type: 'message'
             });
         
         setMessage('');

@@ -14,20 +14,19 @@ const StyledField = styled(Fieldset)`
     border-bottom-color: #ffffff;
     color: black;
     height: 95%;
+    overflow: auto;
 `;
-
-
 
 const TextField = ({ children }) => {
     return (
         <StyledField>
             <ul>
-                {children.map(child => {
+                {children.map((child, index) => {
                     if (!child.status) {
-                        return <div key={child.uid}></div>;
+                        return <div key={index}></div>;
                     } else {
                     return (
-                        <li key={child.uid} >
+                        <li key={index} style={{ wordBreak: 'break-word' }}>
                             <StatusDiv isOnline={child.status.state === "online" ? true : false}/>
                             {child.displayName}
                         </li>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createGlobalStyle, ThemeProvider, css } from "styled-components";
 import styled from 'styled-components';
-import { reset, themes, Hourglass } from 'react95';
+import { reset, themes } from 'react95';
 import { db, firebase, setupPresence } from './firebase'; 
 
 import ChatWindow from './ChatWindow';
@@ -75,6 +75,15 @@ const App = () => {
         }
         setAdmin(user);
         db.collection('users').doc(user.uid).set(user, { merge: true });
+        db
+          .collection('messages')
+          .add({
+              createdAt: new Date(),
+              username: user.displayName,
+              userId: user.uid,
+              color: user.color,
+              type: 'signOn'
+            });
         setupPresence(user);
         setIsLoading(false);
       } else {
@@ -98,6 +107,15 @@ const App = () => {
   }, [])
 
   const handleLogOut = () => {
+    db
+      .collection('messages')
+      .add({
+          createdAt: new Date(),
+          username: admin.displayName,
+          userId: admin.uid,
+          color: admin.color,
+          type: 'signOff'
+      });
     firebase.auth().signOut();
   }
 
